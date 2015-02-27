@@ -8,8 +8,7 @@ var mongoEventer;
 var config, logSender;
 
 function MongoEventer(log,configValues) {
-
-	console.log(configValues);
+	
 	config = configValues;
 	logSender = log;
 
@@ -34,8 +33,7 @@ util.inherits(MongoEventer, EventEmitter);
 function getCollection(eventObject) {
     eventObject.db.collection(eventObject.collectionName, function(err, col) {
         if (err) {
-            logSender.error(err);
-            console.log(err);
+            logSender.error(err);            
             return;
         }
         eventObject.collection = col;
@@ -47,8 +45,7 @@ function getCollection(eventObject) {
 function connect(eventObject) {
     MongoClient.connect(config.mongoUri, function(err, db) {
         if (err) {
-            logSender.error(err);
-            console.log(err);
+            logSender.error(err);            
             return;
         }
 
