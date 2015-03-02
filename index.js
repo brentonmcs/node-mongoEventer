@@ -19,11 +19,14 @@ MongoEventer.init = function() {
 	EventEmitter.call(this);
 	mongoEventer = this;
 
-	console.log('setting up events');
 	mongoEventer.on('connectToDatabase', connect);
     mongoEventer.on('connectedToDatabase', getCollection);
     mongoEventer.on('hasDbCollection', function(eventObject) {
-        mongoEventer.emit(eventObject.returnEvent, eventObject);
+        var parentObj = mongoEventer;
+        if (eventObject.parentObject) {
+            parentObj = eventObject.parentObject;
+        }
+        parentObj.emit(eventObject.returnEvent, eventObject);
     });
 };
 
